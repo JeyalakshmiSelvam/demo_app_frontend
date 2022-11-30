@@ -3,6 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import Login  from './component/Login/Login';
+import Employee from './component/EmployeeCreate/employee'
+import EmployeeList from './component/EmployeeList/employeelist';
 
 function App() {
   return (
@@ -25,8 +27,8 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/' element={< Login />}></Route>
-        {/* <Route exact path='/about' element={< About />}></Route>
-        <Route exact path='/contact' element={< Contact />}></Route> */}
+        <Route exact path='/employeeList' element={< EmployeeList />}></Route>
+        <Route exact path='/employee' element={< Employee />}></Route>
       </Routes>
     </Router>
   );
