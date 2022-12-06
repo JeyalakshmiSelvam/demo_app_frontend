@@ -1,12 +1,12 @@
 import React from 'react';
 import "./login.css";
-
+// import {postRequest} from './../../apiServices/apiFunction'
 
 class Login extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {email :'',password:''};
+        this.state = {email :'',password:'', strategy:'local'};
         this.handleLogin = this.handleLogin.bind(this)
         this.handleChange= this.handleChange.bind(this)
     }
@@ -14,8 +14,30 @@ class Login extends React.Component{
     handleLogin(event) {
         alert("An essay was submitted")
         event.preventDefault();
-        console.log("ev/ent",this.state) // Here we have to call the backend API and based on the response render the home page
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state)
+        };
+        console.log("requestOptions",requestOptions);
+        fetch('http://localhost:3030/authentication', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ output: data})
+                console.log("data",data)
+                if(!data.accessToken){
+                    alert('Invalid credentials')
+//                     this.setState({ output: data})
 
+                } 
+                else {
+                    sessionStorage.setItem('userAccessToken', data.accessToken);
+                    window.location.href='home'
+                }
+            }) 
+            .catch(err=>{
+                this.setState({ output: err})
+            })
         
     }
     handleChange(event){
@@ -34,8 +56,7 @@ class Login extends React.Component{
                     <input type="text" name= 'email' value ={this.state.email} onChange={this.handleChange}/><br></br>
                     <label >Password</label>
                     <input type="password" name ='password' value ={ this.state.password} onChange={this.handleChange} /><br></br>
-                    {/* <button onClick={this.handleLogin}> Login</button>  */}
-                    <input type='submit' value = 'Login'/>
+                    <input type='submit' value = 'Login' onClick={this.handleNavigate}/>
                     </form>
                 </div>
                 

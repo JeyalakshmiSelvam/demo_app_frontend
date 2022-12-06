@@ -10,18 +10,21 @@ class Employee extends React.Component{
     handleSubmit(event) {
         alert("An essay was submitted")
         event.preventDefault();
-        console.log("ev/ent",this.state) // Here we have to call the backend API and based on the response render the home page
+        let token = sessionStorage.getItem('userAccessToken')
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'authorization': token
+            },
             body: JSON.stringify(this.state)
         };
-        console.log("requestOptions");
+        console.log("requestOptions",requestOptions);
         fetch('http://localhost:3030/employee', requestOptions)
             .then(response => response.json())
             .then(data => {
                 // this.setState({ postId: data.id })
-                console.log("data",data)
+                console.log("data employee",data)
             });
         
     }

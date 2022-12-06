@@ -9,7 +9,15 @@ class EmployeeList extends React.Component{
         }
     }
     componentDidMount(){
-        fetch("http://localhost:3030/employee")
+        let token = sessionStorage.getItem('userAccessToken')
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'authorization': token
+            },
+        };
+        fetch("http://localhost:3030/employee", requestOptions)
             .then((res) => res.json())
             .then((json) => {
                 this.setState({

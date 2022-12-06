@@ -1,0 +1,28 @@
+.Left {
+    width:20%; 
+    background-color:#D8D8D8;
+    height: 100%;
+    display: inline-block;
+    
+}
+
+.Right{
+    width:80%; 
+    background-color:#FFE4C4;
+    height: 100%;
+    display: inline-block;
+}
+
+.linkStyle {
+    text-decoration: none;
+    color: 	#484848;
+    
+    
+}
+.Ullist{
+    list-style-type: none;
+}
+.listItem{
+    padding: 8px 0px 8px 0px
+}
+
