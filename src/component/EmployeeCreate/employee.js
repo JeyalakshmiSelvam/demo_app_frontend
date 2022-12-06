@@ -1,5 +1,6 @@
 import React from 'react';
 import './employee.css'
+import {postRequest} from './../../apiServices/apiFunction'
 class Employee extends React.Component{
     constructor(props){
         super(props)
@@ -7,25 +8,19 @@ class Employee extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleSubmit(event) {
+    async handleSubmit(event) {
         alert("An essay was submitted")
         event.preventDefault();
         let token = sessionStorage.getItem('userAccessToken')
-        const requestOptions = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'authorization': token
-            },
-            body: JSON.stringify(this.state)
-        };
-        console.log("requestOptions",requestOptions);
-        fetch('http://localhost:3030/employee', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                // this.setState({ postId: data.id })
-                console.log("data employee",data)
-            });
+
+        await postRequest("/employee",this.state,token)
+            .then(response=>{
+                console.log("response",response)
+                alert('Submitted Successfully')
+            })
+            .catch(err=>{
+                return err;
+            })
         
     }
     handleChange(event){

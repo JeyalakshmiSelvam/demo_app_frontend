@@ -1,6 +1,6 @@
 import React from 'react';
 import "./login.css";
-// import {postRequest} from './../../apiServices/apiFunction'
+import {postRequest} from './../../apiServices/apiFunction'
 
 class Login extends React.Component{
 
@@ -11,30 +11,21 @@ class Login extends React.Component{
         this.handleChange= this.handleChange.bind(this)
     }
 
-    handleLogin(event) {
+    async handleLogin(event) {
         alert("An essay was submitted")
         event.preventDefault();
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state)
-        };
-        console.log("requestOptions",requestOptions);
-        fetch('http://localhost:3030/authentication', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ output: data})
-                console.log("data",data)
-                if(!data.accessToken){
+        await postRequest("/authentication",this.state)
+            .then(response=>{
+                console.log("response",response)
+                if(!response.accessToken){
                     alert('Invalid credentials')
-//                     this.setState({ output: data})
-
+                    
                 } 
                 else {
-                    sessionStorage.setItem('userAccessToken', data.accessToken);
+                    sessionStorage.setItem('userAccessToken', response.accessToken);
                     window.location.href='home'
                 }
-            }) 
+            })
             .catch(err=>{
                 this.setState({ output: err})
             })

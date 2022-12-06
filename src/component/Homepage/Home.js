@@ -1,9 +1,6 @@
 import React from 'react';
 import "./home.css";
 import Sidebar from './sidebar';
-// import EmployeeCreation from '../EmployeeCreate/employee';
-// import Routes from "./../../App";
-
 
 class Home extends React.Component{
     constructor(props){

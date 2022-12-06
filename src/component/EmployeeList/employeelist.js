@@ -1,4 +1,5 @@
 import React from "react";
+import {getRequest} from './../../apiServices/apiFunction'
 
 class EmployeeList extends React.Component{
     constructor(props){
@@ -8,22 +9,17 @@ class EmployeeList extends React.Component{
             DataisLoaded: false
         }
     }
-    componentDidMount(){
+    async componentDidMount(){
         let token = sessionStorage.getItem('userAccessToken')
-        const requestOptions = {
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'authorization': token
-            },
-        };
-        fetch("http://localhost:3030/employee", requestOptions)
-            .then((res) => res.json())
-            .then((json) => {
+        await getRequest('/employee',{},token)
+            .then((response) => {
                 this.setState({
-                    employees: json.data,
+                    employees: response.data,
                     DataisLoaded: true
                 });
+            })
+            .catch(err=>{
+                return err
             })
     }
 
